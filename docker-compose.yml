@@ -1,0 +1,68 @@
+# docker-compose.yml
+version: '3.8'
+
+services:
+  # Redis 캐시/세션 스토어
+  redis:
+    image: redis:7-alpine
+    container_name: ktx-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+    restart: unless-stopped
+
+  # Backend API 서버
+  backend:
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: ktx-backend
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - PORT=3000
+      - REDIS_URL=redis://redis:6379
+      - JWT_SECRET=dev-jwt-secret-key
+      - MAX_CONCURRENT_USERS=50
+      - SESSION_DURATION=3000
+    depends_on:
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    restart: unless-stopped
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+
+  # Frontend (React + Nginx)
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: ktx-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  redis_data:
+    driver: local
+
+networks:
+  default:
+    name: ktx-waiting-room-network
+    driver: bridge
