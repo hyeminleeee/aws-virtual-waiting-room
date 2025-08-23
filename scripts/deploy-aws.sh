@@ -179,7 +179,7 @@ cd ..
 # Frontend 이미지
 print_status "Frontend 이미지 빌드 중..."
 cd frontend
-docker build -t $PROJECT_NAME-frontend .
+docker build --platform linux/amd64 -t $PROJECT_NAME-frontend --build-arg PROFILE=ecs .
 docker tag $PROJECT_NAME-frontend:latest $FRONTEND_ECR_URI:latest
 
 print_status "Frontend 이미지 푸시 중..."

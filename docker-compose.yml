@@ -51,6 +51,8 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
+      args:
+        PROFILE: local
     container_name: ktx-frontend
     ports:
       - "80:80"
