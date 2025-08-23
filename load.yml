@@ -1,0 +1,34 @@
+config:
+  target: "http://ktx-waiting-room-alb-1640745648.ap-northeast-2.elb.amazonaws.com"
+  phases:
+    - duration: 30
+      arrivalRate: 5
+    - duration: 120
+      arrivalRate: 25
+    - duration: 30
+      arrivalRate: 10
+scenarios:
+  - name: "KTX 예매 시나리오"
+    flow:
+      - post:
+          url: "/api/book-ktx"
+          json:
+            route: "서울 → 부산"
+            date: "2025-02-09"
+            passengers: 1
+          capture:
+            - json: "$.userId"
+              as: "userId"
+            - json: "$.sessionId"
+              as: "sessionId"
+            - json: "$.status"
+              as: "status"
+      - think: 2
+      # 상태가 queued여도 그냥 end-session을 호출해도 서버가 안전하게 무시/정리합니다.
+      - post:
+          url: "/api/end-session"
+          json:
+            userId: "{{ userId }}"
+            sessionId: "{{ sessionId }}"
+      - get:
+          url: "/api/queue-status"

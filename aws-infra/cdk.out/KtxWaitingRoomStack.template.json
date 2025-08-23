@@ -1,0 +1,1810 @@
+{
+ "Resources": {
+  "KtxWaitingRoomVPC8B8DBE0C": {
+   "Type": "AWS::EC2::VPC",
+   "Properties": {
+    "CidrBlock": "10.6.0.0/16",
+    "EnableDnsHostnames": true,
+    "EnableDnsSupport": true,
+    "InstanceTenancy": "default",
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "KtxWaitingRoomStack/KtxWaitingRoomVPC"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "KtxWaitingRoomStack/KtxWaitingRoomVPC/Resource"
+   }
+  },
+  "KtxWaitingRoomVPCPublicSubnetSubnet1Subnet8A07EA58": {
+   "Type": "AWS::EC2::Subnet",
+   "Properties": {
+    "AvailabilityZone": "ap-northeast-2a",
+    "CidrBlock": "10.6.0.0/24",
+    "MapPublicIpOnLaunch": true,
+    "Tags": [
+     {
+      "Key": "aws-cdk:subnet-name",
+      "Value": "PublicSubnet"
+     },
+     {
+      "Key": "aws-cdk:subnet-type",
+      "Value": "Public"
+     },
+     {
+      "Key": "Name",
+      "Value": "KtxWaitingRoomStack/KtxWaitingRoomVPC/PublicSubnetSubnet1"
+     }
+    ],
+    "VpcId": {
+     "Ref": "KtxWaitingRoomVPC8B8DBE0C"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "KtxWaitingRoomStack/KtxWaitingRoomVPC/PublicSubnetSubnet1/Subnet"
+   }
+  },
+  "KtxWaitingRoomVPCPublicSubnetSubnet1RouteTable033E2F7F": {
+   "Type": "AWS::EC2::RouteTable",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "KtxWaitingRoomStack/KtxWaitingRoomVPC/PublicSubnetSubnet1"
+     }
+    ],
+    "VpcId": {
+     "Ref": "KtxWaitingRoomVPC8B8DBE0C"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "KtxWaitingRoomStack/KtxWaitingRoomVPC/PublicSubnetSubnet1/RouteTable"
+   }
+  },
+  "KtxWaitingRoomVPCPublicSubnetSubnet1RouteTableAssociation3C2761C8": {
+   "Type": "AWS::EC2::SubnetRouteTableAssociation",
+   "Properties": {
+    "RouteTableId": {
+     "Ref": "KtxWaitingRoomVPCPublicSubnetSubnet1RouteTable033E2F7F"
+    },
+    "SubnetId": {
+     "Ref": "KtxWaitingRoomVPCPublicSubnetSubnet1Subnet8A07EA58"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "KtxWaitingRoomStack/KtxWaitingRoomVPC/PublicSubnetSubnet1/RouteTableAssociation"
+   }
+  },
+  "KtxWaitingRoomVPCPublicSubnetSubnet1DefaultRouteCBFDAA62": {
+   "Type": "AWS::EC2::Route",
+   "Properties": {
+    "DestinationCidrBlock": "0.0.0.0/0",
+    "GatewayId": {
+     "Ref": "KtxWaitingRoomVPCIGW87C790E6"
+    },
+    "RouteTableId": {
+     "Ref": "KtxWaitingRoomVPCPublicSubnetSubnet1RouteTable033E2F7F"
+    }
+   },
+   "DependsOn": [
+    "KtxWaitingRoomVPCVPCGWB92A4D29"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "KtxWaitingRoomStack/KtxWaitingRoomVPC/PublicSubnetSubnet1/DefaultRoute"
+   }
+  },
+  "KtxWaitingRoomVPCPublicSubnetSubnet1EIPF31C4DD2": {
+   "Type": "AWS::EC2::EIP",
+   "Properties": {
+    "Domain": "vpc",
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "KtxWaitingRoomStack/KtxWaitingRoomVPC/PublicSubnetSubnet1"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "KtxWaitingRoomStack/KtxWaitingRoomVPC/PublicSubnetSubnet1/EIP"
+   }
+  },
+  "KtxWaitingRoomVPCPublicSubnetSubnet1NATGateway18DE3597": {
+   "Type": "AWS::EC2::NatGateway",
+   "Properties": {
+    "AllocationId": {
+     "Fn::GetAtt": [
+      "KtxWaitingRoomVPCPublicSubnetSubnet1EIPF31C4DD2",
+      "AllocationId"
+     ]
+    },
+    "SubnetId": {
+     "Ref": "KtxWaitingRoomVPCPublicSubnetSubnet1Subnet8A07EA58"
+    },
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "KtxWaitingRoomStack/KtxWaitingRoomVPC/PublicSubnetSubnet1"
+     }
+    ]
+   },
+   "DependsOn": [
+    "KtxWaitingRoomVPCPublicSubnetSubnet1DefaultRouteCBFDAA62",
+    "KtxWaitingRoomVPCPublicSubnetSubnet1RouteTableAssociation3C2761C8"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "KtxWaitingRoomStack/KtxWaitingRoomVPC/PublicSubnetSubnet1/NATGateway"
+   }
+  },
+  "KtxWaitingRoomVPCPublicSubnetSubnet2Subnet5A631BB5": {
+   "Type": "AWS::EC2::Subnet",
+   "Properties": {
+    "AvailabilityZone": "ap-northeast-2b",
+    "CidrBlock": "10.6.1.0/24",
+    "MapPublicIpOnLaunch": true,
+    "Tags": [
+     {
+      "Key": "aws-cdk:subnet-name",
+      "Value": "PublicSubnet"
+     },
+     {
+      "Key": "aws-cdk:subnet-type",
+      "Value": "Public"
+     },
+     {
+      "Key": "Name",
+      "Value": "KtxWaitingRoomStack/KtxWaitingRoomVPC/PublicSubnetSubnet2"
+     }
+    ],
+    "VpcId": {
+     "Ref": "KtxWaitingRoomVPC8B8DBE0C"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "KtxWaitingRoomStack/KtxWaitingRoomVPC/PublicSubnetSubnet2/Subnet"
+   }
+  },
+  "KtxWaitingRoomVPCPublicSubnetSubnet2RouteTableB974B7A9": {
+   "Type": "AWS::EC2::RouteTable",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "KtxWaitingRoomStack/KtxWaitingRoomVPC/PublicSubnetSubnet2"
+     }
+    ],
+    "VpcId": {
+     "Ref": "KtxWaitingRoomVPC8B8DBE0C"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "KtxWaitingRoomStack/KtxWaitingRoomVPC/PublicSubnetSubnet2/RouteTable"
+   }
+  },
+  "KtxWaitingRoomVPCPublicSubnetSubnet2RouteTableAssociation4388A9D5": {
+   "Type": "AWS::EC2::SubnetRouteTableAssociation",
+   "Properties": {
+    "RouteTableId": {
+     "Ref": "KtxWaitingRoomVPCPublicSubnetSubnet2RouteTableB974B7A9"
+    },
+    "SubnetId": {
+     "Ref": "KtxWaitingRoomVPCPublicSubnetSubnet2Subnet5A631BB5"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "KtxWaitingRoomStack/KtxWaitingRoomVPC/PublicSubnetSubnet2/RouteTableAssociation"
+   }
+  },
+  "KtxWaitingRoomVPCPublicSubnetSubnet2DefaultRoute879651E2": {
+   "Type": "AWS::EC2::Route",
+   "Properties": {
+    "DestinationCidrBlock": "0.0.0.0/0",
+    "GatewayId": {
+     "Ref": "KtxWaitingRoomVPCIGW87C790E6"
+    },
+    "RouteTableId": {
+     "Ref": "KtxWaitingRoomVPCPublicSubnetSubnet2RouteTableB974B7A9"
+    }
+   },
+   "DependsOn": [
+    "KtxWaitingRoomVPCVPCGWB92A4D29"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "KtxWaitingRoomStack/KtxWaitingRoomVPC/PublicSubnetSubnet2/DefaultRoute"
+   }
+  },
+  "KtxWaitingRoomVPCPrivateSubnetSubnet1SubnetDCDEB157": {
+   "Type": "AWS::EC2::Subnet",
+   "Properties": {
+    "AvailabilityZone": "ap-northeast-2a",
+    "CidrBlock": "10.6.2.0/24",
+    "MapPublicIpOnLaunch": false,
+    "Tags": [
+     {
+      "Key": "aws-cdk:subnet-name",
+      "Value": "PrivateSubnet"
+     },
+     {
+      "Key": "aws-cdk:subnet-type",
+      "Value": "Private"
+     },
+     {
+      "Key": "Name",
+      "Value": "KtxWaitingRoomStack/KtxWaitingRoomVPC/PrivateSubnetSubnet1"
+     }
+    ],
+    "VpcId": {
+     "Ref": "KtxWaitingRoomVPC8B8DBE0C"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "KtxWaitingRoomStack/KtxWaitingRoomVPC/PrivateSubnetSubnet1/Subnet"
+   }
+  },
+  "KtxWaitingRoomVPCPrivateSubnetSubnet1RouteTable6BE1C16E": {
+   "Type": "AWS::EC2::RouteTable",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "KtxWaitingRoomStack/KtxWaitingRoomVPC/PrivateSubnetSubnet1"
+     }
+    ],
+    "VpcId": {
+     "Ref": "KtxWaitingRoomVPC8B8DBE0C"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "KtxWaitingRoomStack/KtxWaitingRoomVPC/PrivateSubnetSubnet1/RouteTable"
+   }
+  },
+  "KtxWaitingRoomVPCPrivateSubnetSubnet1RouteTableAssociation65334DFE": {
+   "Type": "AWS::EC2::SubnetRouteTableAssociation",
+   "Properties": {
+    "RouteTableId": {
+     "Ref": "KtxWaitingRoomVPCPrivateSubnetSubnet1RouteTable6BE1C16E"
+    },
+    "SubnetId": {
+     "Ref": "KtxWaitingRoomVPCPrivateSubnetSubnet1SubnetDCDEB157"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "KtxWaitingRoomStack/KtxWaitingRoomVPC/PrivateSubnetSubnet1/RouteTableAssociation"
+   }
+  },
+  "KtxWaitingRoomVPCPrivateSubnetSubnet1DefaultRoute83D209CD": {
+   "Type": "AWS::EC2::Route",
+   "Properties": {
+    "DestinationCidrBlock": "0.0.0.0/0",
+    "NatGatewayId": {
+     "Ref": "KtxWaitingRoomVPCPublicSubnetSubnet1NATGateway18DE3597"
+    },
+    "RouteTableId": {
+     "Ref": "KtxWaitingRoomVPCPrivateSubnetSubnet1RouteTable6BE1C16E"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "KtxWaitingRoomStack/KtxWaitingRoomVPC/PrivateSubnetSubnet1/DefaultRoute"
+   }
+  },
+  "KtxWaitingRoomVPCPrivateSubnetSubnet2Subnet4484975B": {
+   "Type": "AWS::EC2::Subnet",
+   "Properties": {
+    "AvailabilityZone": "ap-northeast-2b",
+    "CidrBlock": "10.6.3.0/24",
+    "MapPublicIpOnLaunch": false,
+    "Tags": [
+     {
+      "Key": "aws-cdk:subnet-name",
+      "Value": "PrivateSubnet"
+     },
+     {
+      "Key": "aws-cdk:subnet-type",
+      "Value": "Private"
+     },
+     {
+      "Key": "Name",
+      "Value": "KtxWaitingRoomStack/KtxWaitingRoomVPC/PrivateSubnetSubnet2"
+     }
+    ],
+    "VpcId": {
+     "Ref": "KtxWaitingRoomVPC8B8DBE0C"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "KtxWaitingRoomStack/KtxWaitingRoomVPC/PrivateSubnetSubnet2/Subnet"
+   }
+  },
+  "KtxWaitingRoomVPCPrivateSubnetSubnet2RouteTable388E54B9": {
+   "Type": "AWS::EC2::RouteTable",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "KtxWaitingRoomStack/KtxWaitingRoomVPC/PrivateSubnetSubnet2"
+     }
+    ],
+    "VpcId": {
+     "Ref": "KtxWaitingRoomVPC8B8DBE0C"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "KtxWaitingRoomStack/KtxWaitingRoomVPC/PrivateSubnetSubnet2/RouteTable"
+   }
+  },
+  "KtxWaitingRoomVPCPrivateSubnetSubnet2RouteTableAssociation1836E132": {
+   "Type": "AWS::EC2::SubnetRouteTableAssociation",
+   "Properties": {
+    "RouteTableId": {
+     "Ref": "KtxWaitingRoomVPCPrivateSubnetSubnet2RouteTable388E54B9"
+    },
+    "SubnetId": {
+     "Ref": "KtxWaitingRoomVPCPrivateSubnetSubnet2Subnet4484975B"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "KtxWaitingRoomStack/KtxWaitingRoomVPC/PrivateSubnetSubnet2/RouteTableAssociation"
+   }
+  },
+  "KtxWaitingRoomVPCPrivateSubnetSubnet2DefaultRoute197E0A52": {
+   "Type": "AWS::EC2::Route",
+   "Properties": {
+    "DestinationCidrBlock": "0.0.0.0/0",
+    "NatGatewayId": {
+     "Ref": "KtxWaitingRoomVPCPublicSubnetSubnet1NATGateway18DE3597"
+    },
+    "RouteTableId": {
+     "Ref": "KtxWaitingRoomVPCPrivateSubnetSubnet2RouteTable388E54B9"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "KtxWaitingRoomStack/KtxWaitingRoomVPC/PrivateSubnetSubnet2/DefaultRoute"
+   }
+  },
+  "KtxWaitingRoomVPCIGW87C790E6": {
+   "Type": "AWS::EC2::InternetGateway",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "KtxWaitingRoomStack/KtxWaitingRoomVPC"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "KtxWaitingRoomStack/KtxWaitingRoomVPC/IGW"
+   }
+  },
+  "KtxWaitingRoomVPCVPCGWB92A4D29": {
+   "Type": "AWS::EC2::VPCGatewayAttachment",
+   "Properties": {
+    "InternetGatewayId": {
+     "Ref": "KtxWaitingRoomVPCIGW87C790E6"
+    },
+    "VpcId": {
+     "Ref": "KtxWaitingRoomVPC8B8DBE0C"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "KtxWaitingRoomStack/KtxWaitingRoomVPC/VPCGW"
+   }
+  },
+  "BackendRepo7FFBAD06": {
+   "Type": "AWS::ECR::Repository",
+   "Properties": {
+    "RepositoryName": "ktx-waiting-room-backend"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "KtxWaitingRoomStack/BackendRepo/Resource"
+   }
+  },
+  "FrontendRepoF80FCC01": {
+   "Type": "AWS::ECR::Repository",
+   "Properties": {
+    "RepositoryName": "ktx-waiting-room-frontend"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "KtxWaitingRoomStack/FrontendRepo/Resource"
+   }
+  },
+  "RedisSubnetGroup": {
+   "Type": "AWS::ElastiCache::SubnetGroup",
+   "Properties": {
+    "Description": "Subnet group for Redis cluster",
+    "SubnetIds": [
+     {
+      "Ref": "KtxWaitingRoomVPCPrivateSubnetSubnet1SubnetDCDEB157"
+     },
+     {
+      "Ref": "KtxWaitingRoomVPCPrivateSubnetSubnet2Subnet4484975B"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "KtxWaitingRoomStack/RedisSubnetGroup"
+   }
+  },
+  "RedisSecurityGroupB05951F6": {
+   "Type": "AWS::EC2::SecurityGroup",
+   "Properties": {
+    "GroupDescription": "Security group for Redis cluster",
+    "SecurityGroupEgress": [
+     {
+      "CidrIp": "255.255.255.255/32",
+      "Description": "Disallow all traffic",
+      "FromPort": 252,
+      "IpProtocol": "icmp",
+      "ToPort": 86
+     }
+    ],
+    "VpcId": {
+     "Ref": "KtxWaitingRoomVPC8B8DBE0C"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "KtxWaitingRoomStack/RedisSecurityGroup/Resource"
+   }
+  },
+  "RedisSecurityGroupfromKtxWaitingRoomStackBackendServiceSecurityGroup7FE2F87063795C39F4FF": {
+   "Type": "AWS::EC2::SecurityGroupIngress",
+   "Properties": {
+    "Description": "Allow backend to access Redis",
+    "FromPort": 6379,
+    "GroupId": {
+     "Fn::GetAtt": [
+      "RedisSecurityGroupB05951F6",
+      "GroupId"
+     ]
+    },
+    "IpProtocol": "tcp",
+    "SourceSecurityGroupId": {
+     "Fn::GetAtt": [
+      "BackendServiceSecurityGroup0865F57D",
+      "GroupId"
+     ]
+    },
+    "ToPort": 6379
+   },
+   "Metadata": {
+    "aws:cdk:path": "KtxWaitingRoomStack/RedisSecurityGroup/from KtxWaitingRoomStackBackendServiceSecurityGroup7FE2F870:6379"
+   }
+  },
+  "RedisCluster": {
+   "Type": "AWS::ElastiCache::CacheCluster",
+   "Properties": {
+    "CacheNodeType": "cache.t3.micro",
+    "CacheSubnetGroupName": {
+     "Ref": "RedisSubnetGroup"
+    },
+    "Engine": "redis",
+    "NumCacheNodes": 1,
+    "Port": 6379,
+    "VpcSecurityGroupIds": [
+     {
+      "Fn::GetAtt": [
+       "RedisSecurityGroupB05951F6",
+       "GroupId"
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "KtxWaitingRoomStack/RedisCluster"
+   }
+  },
+  "KtxWaitingRoomCluster413FDA7A": {
+   "Type": "AWS::ECS::Cluster",
+   "Properties": {
+    "ClusterName": "ktx-waiting-room-cluster"
+   },
+   "Metadata": {
+    "aws:cdk:path": "KtxWaitingRoomStack/KtxWaitingRoomCluster/Resource"
+   }
+  },
+  "BackendLogGroupDA10F1B2": {
+   "Type": "AWS::Logs::LogGroup",
+   "Properties": {
+    "LogGroupName": "/ecs/ktx-waiting-room-backend",
+    "RetentionInDays": 7
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "KtxWaitingRoomStack/BackendLogGroup/Resource"
+   }
+  },
+  "FrontendLogGroupCE4F14E0": {
+   "Type": "AWS::Logs::LogGroup",
+   "Properties": {
+    "LogGroupName": "/ecs/ktx-waiting-room-frontend",
+    "RetentionInDays": 7
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "KtxWaitingRoomStack/FrontendLogGroup/Resource"
+   }
+  },
+  "BackendTaskDefTaskRoleBA953A3B": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "ecs-tasks.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "KtxWaitingRoomStack/BackendTaskDef/TaskRole/Resource"
+   }
+  },
+  "BackendTaskDefTaskRoleDefaultPolicy2C657A56": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "ssmmessages:CreateControlChannel",
+        "ssmmessages:CreateDataChannel",
+        "ssmmessages:OpenControlChannel",
+        "ssmmessages:OpenDataChannel"
+       ],
+       "Effect": "Allow",
+       "Resource": "*"
+      },
+      {
+       "Action": "logs:DescribeLogGroups",
+       "Effect": "Allow",
+       "Resource": "*"
+      },
+      {
+       "Action": [
+        "logs:CreateLogStream",
+        "logs:DescribeLogStreams",
+        "logs:PutLogEvents"
+       ],
+       "Effect": "Allow",
+       "Resource": "*"
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "BackendTaskDefTaskRoleDefaultPolicy2C657A56",
+    "Roles": [
+     {
+      "Ref": "BackendTaskDefTaskRoleBA953A3B"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "KtxWaitingRoomStack/BackendTaskDef/TaskRole/DefaultPolicy/Resource"
+   }
+  },
+  "BackendTaskDef6ECE986E": {
+   "Type": "AWS::ECS::TaskDefinition",
+   "Properties": {
+    "ContainerDefinitions": [
+     {
+      "Environment": [
+       {
+        "Name": "NODE_ENV",
+        "Value": "production"
+       },
+       {
+        "Name": "PORT",
+        "Value": "3000"
+       },
+       {
+        "Name": "REDIS_URL",
+        "Value": {
+         "Fn::Join": [
+          "",
+          [
+           "redis://",
+           {
+            "Fn::GetAtt": [
+             "RedisCluster",
+             "RedisEndpoint.Address"
+            ]
+           },
+           ":",
+           {
+            "Fn::GetAtt": [
+             "RedisCluster",
+             "RedisEndpoint.Port"
+            ]
+           }
+          ]
+         ]
+        }
+       },
+       {
+        "Name": "MAX_CONCURRENT_USERS",
+        "Value": "20"
+       },
+       {
+        "Name": "SESSION_DURATION",
+        "Value": "15000"
+       },
+       {
+        "Name": "JWT_SECRET",
+        "Value": "production-jwt-secret-change-this"
+       }
+      ],
+      "Essential": true,
+      "HealthCheck": {
+       "Command": [
+        "CMD-SHELL",
+        "wget --no-verbose --tries=1 --spider http://localhost:3000/health || exit 1"
+       ],
+       "Interval": 30,
+       "Retries": 3,
+       "StartPeriod": 60,
+       "Timeout": 5
+      },
+      "Image": {
+       "Fn::Join": [
+        "",
+        [
+         {
+          "Fn::Select": [
+           4,
+           {
+            "Fn::Split": [
+             ":",
+             {
+              "Fn::GetAtt": [
+               "BackendRepo7FFBAD06",
+               "Arn"
+              ]
+             }
+            ]
+           }
+          ]
+         },
+         ".dkr.ecr.",
+         {
+          "Fn::Select": [
+           3,
+           {
+            "Fn::Split": [
+             ":",
+             {
+              "Fn::GetAtt": [
+               "BackendRepo7FFBAD06",
+               "Arn"
+              ]
+             }
+            ]
+           }
+          ]
+         },
+         ".",
+         {
+          "Ref": "AWS::URLSuffix"
+         },
+         "/",
+         {
+          "Ref": "BackendRepo7FFBAD06"
+         },
+         ":latest"
+        ]
+       ]
+      },
+      "LogConfiguration": {
+       "LogDriver": "awslogs",
+       "Options": {
+        "awslogs-group": {
+         "Ref": "BackendLogGroupDA10F1B2"
+        },
+        "awslogs-stream-prefix": "backend",
+        "awslogs-region": "ap-northeast-2"
+       }
+      },
+      "Name": "BackendContainer",
+      "PortMappings": [
+       {
+        "ContainerPort": 3000,
+        "Protocol": "tcp"
+       }
+      ]
+     }
+    ],
+    "Cpu": "256",
+    "ExecutionRoleArn": {
+     "Fn::GetAtt": [
+      "BackendTaskDefExecutionRoleC5A001DB",
+      "Arn"
+     ]
+    },
+    "Family": "KtxWaitingRoomStackBackendTaskDefC9C6CA21",
+    "Memory": "512",
+    "NetworkMode": "awsvpc",
+    "RequiresCompatibilities": [
+     "FARGATE"
+    ],
+    "TaskRoleArn": {
+     "Fn::GetAtt": [
+      "BackendTaskDefTaskRoleBA953A3B",
+      "Arn"
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "KtxWaitingRoomStack/BackendTaskDef/Resource"
+   }
+  },
+  "BackendTaskDefExecutionRoleC5A001DB": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "ecs-tasks.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "KtxWaitingRoomStack/BackendTaskDef/ExecutionRole/Resource"
+   }
+  },
+  "BackendTaskDefExecutionRoleDefaultPolicyAA625660": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "ecr:BatchCheckLayerAvailability",
+        "ecr:GetDownloadUrlForLayer",
+        "ecr:BatchGetImage"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::GetAtt": [
+         "BackendRepo7FFBAD06",
+         "Arn"
+        ]
+       }
+      },
+      {
+       "Action": "ecr:GetAuthorizationToken",
+       "Effect": "Allow",
+       "Resource": "*"
+      },
+      {
+       "Action": [
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::GetAtt": [
+         "BackendLogGroupDA10F1B2",
+         "Arn"
+        ]
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "BackendTaskDefExecutionRoleDefaultPolicyAA625660",
+    "Roles": [
+     {
+      "Ref": "BackendTaskDefExecutionRoleC5A001DB"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "KtxWaitingRoomStack/BackendTaskDef/ExecutionRole/DefaultPolicy/Resource"
+   }
+  },
+  "FrontendTaskDefTaskRoleDA0FD037": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "ecs-tasks.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "KtxWaitingRoomStack/FrontendTaskDef/TaskRole/Resource"
+   }
+  },
+  "FrontendTaskDef7D3FD156": {
+   "Type": "AWS::ECS::TaskDefinition",
+   "Properties": {
+    "ContainerDefinitions": [
+     {
+      "Essential": true,
+      "Image": {
+       "Fn::Join": [
+        "",
+        [
+         {
+          "Fn::Select": [
+           4,
+           {
+            "Fn::Split": [
+             ":",
+             {
+              "Fn::GetAtt": [
+               "FrontendRepoF80FCC01",
+               "Arn"
+              ]
+             }
+            ]
+           }
+          ]
+         },
+         ".dkr.ecr.",
+         {
+          "Fn::Select": [
+           3,
+           {
+            "Fn::Split": [
+             ":",
+             {
+              "Fn::GetAtt": [
+               "FrontendRepoF80FCC01",
+               "Arn"
+              ]
+             }
+            ]
+           }
+          ]
+         },
+         ".",
+         {
+          "Ref": "AWS::URLSuffix"
+         },
+         "/",
+         {
+          "Ref": "FrontendRepoF80FCC01"
+         },
+         ":latest"
+        ]
+       ]
+      },
+      "LogConfiguration": {
+       "LogDriver": "awslogs",
+       "Options": {
+        "awslogs-group": {
+         "Ref": "FrontendLogGroupCE4F14E0"
+        },
+        "awslogs-stream-prefix": "frontend",
+        "awslogs-region": "ap-northeast-2"
+       }
+      },
+      "Name": "FrontendContainer",
+      "PortMappings": [
+       {
+        "ContainerPort": 80,
+        "Protocol": "tcp"
+       }
+      ]
+     }
+    ],
+    "Cpu": "256",
+    "ExecutionRoleArn": {
+     "Fn::GetAtt": [
+      "FrontendTaskDefExecutionRoleE7329A09",
+      "Arn"
+     ]
+    },
+    "Family": "KtxWaitingRoomStackFrontendTaskDefD0237824",
+    "Memory": "512",
+    "NetworkMode": "awsvpc",
+    "RequiresCompatibilities": [
+     "FARGATE"
+    ],
+    "TaskRoleArn": {
+     "Fn::GetAtt": [
+      "FrontendTaskDefTaskRoleDA0FD037",
+      "Arn"
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "KtxWaitingRoomStack/FrontendTaskDef/Resource"
+   }
+  },
+  "FrontendTaskDefExecutionRoleE7329A09": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "ecs-tasks.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "KtxWaitingRoomStack/FrontendTaskDef/ExecutionRole/Resource"
+   }
+  },
+  "FrontendTaskDefExecutionRoleDefaultPolicy48DF7F3B": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "ecr:BatchCheckLayerAvailability",
+        "ecr:GetDownloadUrlForLayer",
+        "ecr:BatchGetImage"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::GetAtt": [
+         "FrontendRepoF80FCC01",
+         "Arn"
+        ]
+       }
+      },
+      {
+       "Action": "ecr:GetAuthorizationToken",
+       "Effect": "Allow",
+       "Resource": "*"
+      },
+      {
+       "Action": [
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::GetAtt": [
+         "FrontendLogGroupCE4F14E0",
+         "Arn"
+        ]
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "FrontendTaskDefExecutionRoleDefaultPolicy48DF7F3B",
+    "Roles": [
+     {
+      "Ref": "FrontendTaskDefExecutionRoleE7329A09"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "KtxWaitingRoomStack/FrontendTaskDef/ExecutionRole/DefaultPolicy/Resource"
+   }
+  },
+  "KtxWaitingRoomALB93DBCB0C": {
+   "Type": "AWS::ElasticLoadBalancingV2::LoadBalancer",
+   "Properties": {
+    "LoadBalancerAttributes": [
+     {
+      "Key": "deletion_protection.enabled",
+      "Value": "false"
+     }
+    ],
+    "Name": "ktx-waiting-room-alb",
+    "Scheme": "internet-facing",
+    "SecurityGroups": [
+     {
+      "Fn::GetAtt": [
+       "KtxWaitingRoomALBSecurityGroup6E652079",
+       "GroupId"
+      ]
+     }
+    ],
+    "Subnets": [
+     {
+      "Ref": "KtxWaitingRoomVPCPublicSubnetSubnet1Subnet8A07EA58"
+     },
+     {
+      "Ref": "KtxWaitingRoomVPCPublicSubnetSubnet2Subnet5A631BB5"
+     }
+    ],
+    "Type": "application"
+   },
+   "DependsOn": [
+    "KtxWaitingRoomVPCPublicSubnetSubnet1DefaultRouteCBFDAA62",
+    "KtxWaitingRoomVPCPublicSubnetSubnet1RouteTableAssociation3C2761C8",
+    "KtxWaitingRoomVPCPublicSubnetSubnet2DefaultRoute879651E2",
+    "KtxWaitingRoomVPCPublicSubnetSubnet2RouteTableAssociation4388A9D5"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "KtxWaitingRoomStack/KtxWaitingRoomALB/Resource"
+   }
+  },
+  "KtxWaitingRoomALBSecurityGroup6E652079": {
+   "Type": "AWS::EC2::SecurityGroup",
+   "Properties": {
+    "GroupDescription": "Automatically created Security Group for ELB KtxWaitingRoomStackKtxWaitingRoomALB65FE17DD",
+    "SecurityGroupIngress": [
+     {
+      "CidrIp": "0.0.0.0/0",
+      "Description": "Allow from anyone on port 80",
+      "FromPort": 80,
+      "IpProtocol": "tcp",
+      "ToPort": 80
+     }
+    ],
+    "VpcId": {
+     "Ref": "KtxWaitingRoomVPC8B8DBE0C"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "KtxWaitingRoomStack/KtxWaitingRoomALB/SecurityGroup/Resource"
+   }
+  },
+  "KtxWaitingRoomALBSecurityGrouptoKtxWaitingRoomStackBackendServiceSecurityGroup7FE2F8703000C42003F9": {
+   "Type": "AWS::EC2::SecurityGroupEgress",
+   "Properties": {
+    "Description": "Load balancer to target",
+    "DestinationSecurityGroupId": {
+     "Fn::GetAtt": [
+      "BackendServiceSecurityGroup0865F57D",
+      "GroupId"
+     ]
+    },
+    "FromPort": 3000,
+    "GroupId": {
+     "Fn::GetAtt": [
+      "KtxWaitingRoomALBSecurityGroup6E652079",
+      "GroupId"
+     ]
+    },
+    "IpProtocol": "tcp",
+    "ToPort": 3000
+   },
+   "Metadata": {
+    "aws:cdk:path": "KtxWaitingRoomStack/KtxWaitingRoomALB/SecurityGroup/to KtxWaitingRoomStackBackendServiceSecurityGroup7FE2F870:3000"
+   }
+  },
+  "KtxWaitingRoomALBSecurityGrouptoKtxWaitingRoomStackFrontendServiceSecurityGroup431D6B5D80EA41605F": {
+   "Type": "AWS::EC2::SecurityGroupEgress",
+   "Properties": {
+    "Description": "Load balancer to target",
+    "DestinationSecurityGroupId": {
+     "Fn::GetAtt": [
+      "FrontendServiceSecurityGroup85470DEC",
+      "GroupId"
+     ]
+    },
+    "FromPort": 80,
+    "GroupId": {
+     "Fn::GetAtt": [
+      "KtxWaitingRoomALBSecurityGroup6E652079",
+      "GroupId"
+     ]
+    },
+    "IpProtocol": "tcp",
+    "ToPort": 80
+   },
+   "Metadata": {
+    "aws:cdk:path": "KtxWaitingRoomStack/KtxWaitingRoomALB/SecurityGroup/to KtxWaitingRoomStackFrontendServiceSecurityGroup431D6B5D:80"
+   }
+  },
+  "KtxWaitingRoomALBPublicListenerC2AB1A42": {
+   "Type": "AWS::ElasticLoadBalancingV2::Listener",
+   "Properties": {
+    "DefaultActions": [
+     {
+      "TargetGroupArn": {
+       "Ref": "FrontendTargetGroupED7B3E5D"
+      },
+      "Type": "forward"
+     }
+    ],
+    "LoadBalancerArn": {
+     "Ref": "KtxWaitingRoomALB93DBCB0C"
+    },
+    "Port": 80,
+    "Protocol": "HTTP"
+   },
+   "Metadata": {
+    "aws:cdk:path": "KtxWaitingRoomStack/KtxWaitingRoomALB/PublicListener/Resource"
+   }
+  },
+  "KtxWaitingRoomALBPublicListenerApiRoutingRule65614A61": {
+   "Type": "AWS::ElasticLoadBalancingV2::ListenerRule",
+   "Properties": {
+    "Actions": [
+     {
+      "TargetGroupArn": {
+       "Ref": "BackendTargetGroupECF98930"
+      },
+      "Type": "forward"
+     }
+    ],
+    "Conditions": [
+     {
+      "Field": "path-pattern",
+      "PathPatternConfig": {
+       "Values": [
+        "/api/*",
+        "/health"
+       ]
+      }
+     }
+    ],
+    "ListenerArn": {
+     "Ref": "KtxWaitingRoomALBPublicListenerC2AB1A42"
+    },
+    "Priority": 100
+   },
+   "Metadata": {
+    "aws:cdk:path": "KtxWaitingRoomStack/KtxWaitingRoomALB/PublicListener/ApiRoutingRule/Resource"
+   }
+  },
+  "BackendService7A4224EE": {
+   "Type": "AWS::ECS::Service",
+   "Properties": {
+    "Cluster": {
+     "Ref": "KtxWaitingRoomCluster413FDA7A"
+    },
+    "DeploymentConfiguration": {
+     "Alarms": {
+      "AlarmNames": [],
+      "Enable": false,
+      "Rollback": false
+     },
+     "MaximumPercent": 200,
+     "MinimumHealthyPercent": 50
+    },
+    "DesiredCount": 2,
+    "EnableECSManagedTags": false,
+    "EnableExecuteCommand": true,
+    "HealthCheckGracePeriodSeconds": 60,
+    "LaunchType": "FARGATE",
+    "LoadBalancers": [
+     {
+      "ContainerName": "BackendContainer",
+      "ContainerPort": 3000,
+      "TargetGroupArn": {
+       "Ref": "BackendTargetGroupECF98930"
+      }
+     }
+    ],
+    "NetworkConfiguration": {
+     "AwsvpcConfiguration": {
+      "AssignPublicIp": "DISABLED",
+      "SecurityGroups": [
+       {
+        "Fn::GetAtt": [
+         "BackendServiceSecurityGroup0865F57D",
+         "GroupId"
+        ]
+       }
+      ],
+      "Subnets": [
+       {
+        "Ref": "KtxWaitingRoomVPCPrivateSubnetSubnet1SubnetDCDEB157"
+       },
+       {
+        "Ref": "KtxWaitingRoomVPCPrivateSubnetSubnet2Subnet4484975B"
+       }
+      ]
+     }
+    },
+    "ServiceName": "ktx-backend-service",
+    "TaskDefinition": {
+     "Ref": "BackendTaskDef6ECE986E"
+    }
+   },
+   "DependsOn": [
+    "BackendTaskDefTaskRoleDefaultPolicy2C657A56",
+    "BackendTaskDefTaskRoleBA953A3B",
+    "KtxWaitingRoomALBPublicListenerApiRoutingRule65614A61"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "KtxWaitingRoomStack/BackendService/Service"
+   }
+  },
+  "BackendServiceSecurityGroup0865F57D": {
+   "Type": "AWS::EC2::SecurityGroup",
+   "Properties": {
+    "GroupDescription": "KtxWaitingRoomStack/BackendService/SecurityGroup",
+    "SecurityGroupEgress": [
+     {
+      "CidrIp": "0.0.0.0/0",
+      "Description": "Allow all outbound traffic by default",
+      "IpProtocol": "-1"
+     }
+    ],
+    "VpcId": {
+     "Ref": "KtxWaitingRoomVPC8B8DBE0C"
+    }
+   },
+   "DependsOn": [
+    "BackendTaskDefTaskRoleDefaultPolicy2C657A56",
+    "BackendTaskDefTaskRoleBA953A3B"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "KtxWaitingRoomStack/BackendService/SecurityGroup/Resource"
+   }
+  },
+  "BackendServiceSecurityGroupfromKtxWaitingRoomStackKtxWaitingRoomALBSecurityGroup0C61C46D3000C1DCE067": {
+   "Type": "AWS::EC2::SecurityGroupIngress",
+   "Properties": {
+    "Description": "Load balancer to target",
+    "FromPort": 3000,
+    "GroupId": {
+     "Fn::GetAtt": [
+      "BackendServiceSecurityGroup0865F57D",
+      "GroupId"
+     ]
+    },
+    "IpProtocol": "tcp",
+    "SourceSecurityGroupId": {
+     "Fn::GetAtt": [
+      "KtxWaitingRoomALBSecurityGroup6E652079",
+      "GroupId"
+     ]
+    },
+    "ToPort": 3000
+   },
+   "DependsOn": [
+    "BackendTaskDefTaskRoleDefaultPolicy2C657A56",
+    "BackendTaskDefTaskRoleBA953A3B"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "KtxWaitingRoomStack/BackendService/SecurityGroup/from KtxWaitingRoomStackKtxWaitingRoomALBSecurityGroup0C61C46D:3000"
+   }
+  },
+  "BackendServiceTaskCountTarget0CA57D80": {
+   "Type": "AWS::ApplicationAutoScaling::ScalableTarget",
+   "Properties": {
+    "MaxCapacity": 10,
+    "MinCapacity": 1,
+    "ResourceId": {
+     "Fn::Join": [
+      "",
+      [
+       "service/",
+       {
+        "Ref": "KtxWaitingRoomCluster413FDA7A"
+       },
+       "/",
+       {
+        "Fn::GetAtt": [
+         "BackendService7A4224EE",
+         "Name"
+        ]
+       }
+      ]
+     ]
+    },
+    "RoleARN": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":iam::077672914621:role/aws-service-role/ecs.application-autoscaling.amazonaws.com/AWSServiceRoleForApplicationAutoScaling_ECSService"
+      ]
+     ]
+    },
+    "ScalableDimension": "ecs:service:DesiredCount",
+    "ServiceNamespace": "ecs"
+   },
+   "DependsOn": [
+    "BackendTaskDefTaskRoleDefaultPolicy2C657A56",
+    "BackendTaskDefTaskRoleBA953A3B"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "KtxWaitingRoomStack/BackendService/TaskCount/Target/Resource"
+   }
+  },
+  "BackendServiceTaskCountTargetBackendCpuScaling3DD11755": {
+   "Type": "AWS::ApplicationAutoScaling::ScalingPolicy",
+   "Properties": {
+    "PolicyName": "KtxWaitingRoomStackBackendServiceTaskCountTargetBackendCpuScaling84DAC519",
+    "PolicyType": "TargetTrackingScaling",
+    "ScalingTargetId": {
+     "Ref": "BackendServiceTaskCountTarget0CA57D80"
+    },
+    "TargetTrackingScalingPolicyConfiguration": {
+     "PredefinedMetricSpecification": {
+      "PredefinedMetricType": "ECSServiceAverageCPUUtilization"
+     },
+     "ScaleInCooldown": 300,
+     "ScaleOutCooldown": 300,
+     "TargetValue": 70
+    }
+   },
+   "DependsOn": [
+    "BackendTaskDefTaskRoleDefaultPolicy2C657A56",
+    "BackendTaskDefTaskRoleBA953A3B"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "KtxWaitingRoomStack/BackendService/TaskCount/Target/BackendCpuScaling/Resource"
+   }
+  },
+  "FrontendServiceBC94BA93": {
+   "Type": "AWS::ECS::Service",
+   "Properties": {
+    "Cluster": {
+     "Ref": "KtxWaitingRoomCluster413FDA7A"
+    },
+    "DeploymentConfiguration": {
+     "Alarms": {
+      "AlarmNames": [],
+      "Enable": false,
+      "Rollback": false
+     },
+     "MaximumPercent": 200,
+     "MinimumHealthyPercent": 50
+    },
+    "DesiredCount": 2,
+    "EnableECSManagedTags": false,
+    "HealthCheckGracePeriodSeconds": 60,
+    "LaunchType": "FARGATE",
+    "LoadBalancers": [
+     {
+      "ContainerName": "FrontendContainer",
+      "ContainerPort": 80,
+      "TargetGroupArn": {
+       "Ref": "FrontendTargetGroupED7B3E5D"
+      }
+     }
+    ],
+    "NetworkConfiguration": {
+     "AwsvpcConfiguration": {
+      "AssignPublicIp": "DISABLED",
+      "SecurityGroups": [
+       {
+        "Fn::GetAtt": [
+         "FrontendServiceSecurityGroup85470DEC",
+         "GroupId"
+        ]
+       }
+      ],
+      "Subnets": [
+       {
+        "Ref": "KtxWaitingRoomVPCPrivateSubnetSubnet1SubnetDCDEB157"
+       },
+       {
+        "Ref": "KtxWaitingRoomVPCPrivateSubnetSubnet2Subnet4484975B"
+       }
+      ]
+     }
+    },
+    "ServiceName": "ktx-frontend-service",
+    "TaskDefinition": {
+     "Ref": "FrontendTaskDef7D3FD156"
+    }
+   },
+   "DependsOn": [
+    "FrontendTaskDefTaskRoleDA0FD037",
+    "KtxWaitingRoomALBPublicListenerApiRoutingRule65614A61",
+    "KtxWaitingRoomALBPublicListenerC2AB1A42"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "KtxWaitingRoomStack/FrontendService/Service"
+   }
+  },
+  "FrontendServiceSecurityGroup85470DEC": {
+   "Type": "AWS::EC2::SecurityGroup",
+   "Properties": {
+    "GroupDescription": "KtxWaitingRoomStack/FrontendService/SecurityGroup",
+    "SecurityGroupEgress": [
+     {
+      "CidrIp": "0.0.0.0/0",
+      "Description": "Allow all outbound traffic by default",
+      "IpProtocol": "-1"
+     }
+    ],
+    "VpcId": {
+     "Ref": "KtxWaitingRoomVPC8B8DBE0C"
+    }
+   },
+   "DependsOn": [
+    "FrontendTaskDefTaskRoleDA0FD037"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "KtxWaitingRoomStack/FrontendService/SecurityGroup/Resource"
+   }
+  },
+  "FrontendServiceSecurityGroupfromKtxWaitingRoomStackKtxWaitingRoomALBSecurityGroup0C61C46D80269220D9": {
+   "Type": "AWS::EC2::SecurityGroupIngress",
+   "Properties": {
+    "Description": "Load balancer to target",
+    "FromPort": 80,
+    "GroupId": {
+     "Fn::GetAtt": [
+      "FrontendServiceSecurityGroup85470DEC",
+      "GroupId"
+     ]
+    },
+    "IpProtocol": "tcp",
+    "SourceSecurityGroupId": {
+     "Fn::GetAtt": [
+      "KtxWaitingRoomALBSecurityGroup6E652079",
+      "GroupId"
+     ]
+    },
+    "ToPort": 80
+   },
+   "DependsOn": [
+    "FrontendTaskDefTaskRoleDA0FD037"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "KtxWaitingRoomStack/FrontendService/SecurityGroup/from KtxWaitingRoomStackKtxWaitingRoomALBSecurityGroup0C61C46D:80"
+   }
+  },
+  "FrontendServiceTaskCountTarget125583E9": {
+   "Type": "AWS::ApplicationAutoScaling::ScalableTarget",
+   "Properties": {
+    "MaxCapacity": 5,
+    "MinCapacity": 1,
+    "ResourceId": {
+     "Fn::Join": [
+      "",
+      [
+       "service/",
+       {
+        "Ref": "KtxWaitingRoomCluster413FDA7A"
+       },
+       "/",
+       {
+        "Fn::GetAtt": [
+         "FrontendServiceBC94BA93",
+         "Name"
+        ]
+       }
+      ]
+     ]
+    },
+    "RoleARN": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":iam::077672914621:role/aws-service-role/ecs.application-autoscaling.amazonaws.com/AWSServiceRoleForApplicationAutoScaling_ECSService"
+      ]
+     ]
+    },
+    "ScalableDimension": "ecs:service:DesiredCount",
+    "ServiceNamespace": "ecs"
+   },
+   "DependsOn": [
+    "FrontendTaskDefTaskRoleDA0FD037"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "KtxWaitingRoomStack/FrontendService/TaskCount/Target/Resource"
+   }
+  },
+  "FrontendServiceTaskCountTargetFrontendCpuScalingC68B756E": {
+   "Type": "AWS::ApplicationAutoScaling::ScalingPolicy",
+   "Properties": {
+    "PolicyName": "KtxWaitingRoomStackFrontendServiceTaskCountTargetFrontendCpuScalingC9825465",
+    "PolicyType": "TargetTrackingScaling",
+    "ScalingTargetId": {
+     "Ref": "FrontendServiceTaskCountTarget125583E9"
+    },
+    "TargetTrackingScalingPolicyConfiguration": {
+     "PredefinedMetricSpecification": {
+      "PredefinedMetricType": "ECSServiceAverageCPUUtilization"
+     },
+     "ScaleInCooldown": 300,
+     "ScaleOutCooldown": 300,
+     "TargetValue": 70
+    }
+   },
+   "DependsOn": [
+    "FrontendTaskDefTaskRoleDA0FD037"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "KtxWaitingRoomStack/FrontendService/TaskCount/Target/FrontendCpuScaling/Resource"
+   }
+  },
+  "BackendTargetGroupECF98930": {
+   "Type": "AWS::ElasticLoadBalancingV2::TargetGroup",
+   "Properties": {
+    "HealthCheckIntervalSeconds": 30,
+    "HealthCheckPath": "/health",
+    "HealthCheckTimeoutSeconds": 5,
+    "HealthyThresholdCount": 2,
+    "Matcher": {
+     "HttpCode": "200"
+    },
+    "Port": 3000,
+    "Protocol": "HTTP",
+    "TargetGroupAttributes": [
+     {
+      "Key": "stickiness.enabled",
+      "Value": "false"
+     }
+    ],
+    "TargetType": "ip",
+    "UnhealthyThresholdCount": 3,
+    "VpcId": {
+     "Ref": "KtxWaitingRoomVPC8B8DBE0C"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "KtxWaitingRoomStack/BackendTargetGroup/Resource"
+   }
+  },
+  "FrontendTargetGroupED7B3E5D": {
+   "Type": "AWS::ElasticLoadBalancingV2::TargetGroup",
+   "Properties": {
+    "HealthCheckIntervalSeconds": 30,
+    "HealthCheckPath": "/",
+    "HealthCheckTimeoutSeconds": 5,
+    "Matcher": {
+     "HttpCode": "200"
+    },
+    "Port": 80,
+    "Protocol": "HTTP",
+    "TargetGroupAttributes": [
+     {
+      "Key": "stickiness.enabled",
+      "Value": "false"
+     }
+    ],
+    "TargetType": "ip",
+    "VpcId": {
+     "Ref": "KtxWaitingRoomVPC8B8DBE0C"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "KtxWaitingRoomStack/FrontendTargetGroup/Resource"
+   }
+  },
+  "CDKMetadata": {
+   "Type": "AWS::CDK::Metadata",
+   "Properties": {
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/31RwW7bMAz9lt4VbfFl58zrigDFZthBrwOtsC4bRTIkKkEh+N8HWY7tbMNOfO/xSSKfCllsC/n5Aa5+o46njaZWxoZBnQRc/a+IqpDxpVeifDUvVSmq0GpSTWgNctIWVNvAeIBW46Iv2s57qwiYrJnNCTzuq1R+AD8B4xU+ROXoAozLxXvD6AzOhjzJxHbMoN7OaFg0qIIj/nhyNvTjDP8V9qZz6P1f+uMoDwKVk7HG3npi68ZnFzYI1OCZFKg3lHFeeH6qTI1SB8/o0l1exomN3Ql+B9dBSsifvuErGbrl86diDQMZdCttOtugu5DKmU+wUaBT5umS0gbDg9C28zI+224e8IYHQXCWsbb538ZaWU1q3DijeVtt4diCBqPIdJdCxl3fa1Ljtz5bOH4de3nHO772kWc0k+eG/9GvQ57ojq98B3DdKvAVHQQsNghsvQJNppNxSSaZx8zulVwODtSJTNfkc0scd8IwiBq9DS6n/zNwH3gQxh5RvvtPl6KQ2y9y+/DuiTYuGKYzyjrX38FZ5OV3AwAA"
+   },
+   "Metadata": {
+    "aws:cdk:path": "KtxWaitingRoomStack/CDKMetadata/Default"
+   }
+  }
+ },
+ "Outputs": {
+  "LoadBalancerDNS": {
+   "Description": "Load Balancer DNS Name",
+   "Value": {
+    "Fn::GetAtt": [
+     "KtxWaitingRoomALB93DBCB0C",
+     "DNSName"
+    ]
+   },
+   "Export": {
+    "Name": "KtxWaitingRoom-ALB-DNS"
+   }
+  },
+  "BackendECRRepository": {
+   "Description": "Backend ECR Repository URI",
+   "Value": {
+    "Fn::Join": [
+     "",
+     [
+      {
+       "Fn::Select": [
+        4,
+        {
+         "Fn::Split": [
+          ":",
+          {
+           "Fn::GetAtt": [
+            "BackendRepo7FFBAD06",
+            "Arn"
+           ]
+          }
+         ]
+        }
+       ]
+      },
+      ".dkr.ecr.",
+      {
+       "Fn::Select": [
+        3,
+        {
+         "Fn::Split": [
+          ":",
+          {
+           "Fn::GetAtt": [
+            "BackendRepo7FFBAD06",
+            "Arn"
+           ]
+          }
+         ]
+        }
+       ]
+      },
+      ".",
+      {
+       "Ref": "AWS::URLSuffix"
+      },
+      "/",
+      {
+       "Ref": "BackendRepo7FFBAD06"
+      }
+     ]
+    ]
+   },
+   "Export": {
+    "Name": "KtxWaitingRoom-Backend-ECR"
+   }
+  },
+  "FrontendECRRepository": {
+   "Description": "Frontend ECR Repository URI",
+   "Value": {
+    "Fn::Join": [
+     "",
+     [
+      {
+       "Fn::Select": [
+        4,
+        {
+         "Fn::Split": [
+          ":",
+          {
+           "Fn::GetAtt": [
+            "FrontendRepoF80FCC01",
+            "Arn"
+           ]
+          }
+         ]
+        }
+       ]
+      },
+      ".dkr.ecr.",
+      {
+       "Fn::Select": [
+        3,
+        {
+         "Fn::Split": [
+          ":",
+          {
+           "Fn::GetAtt": [
+            "FrontendRepoF80FCC01",
+            "Arn"
+           ]
+          }
+         ]
+        }
+       ]
+      },
+      ".",
+      {
+       "Ref": "AWS::URLSuffix"
+      },
+      "/",
+      {
+       "Ref": "FrontendRepoF80FCC01"
+      }
+     ]
+    ]
+   },
+   "Export": {
+    "Name": "KtxWaitingRoom-Frontend-ECR"
+   }
+  },
+  "RedisEndpoint": {
+   "Description": "Redis Cluster Endpoint",
+   "Value": {
+    "Fn::GetAtt": [
+     "RedisCluster",
+     "RedisEndpoint.Address"
+    ]
+   },
+   "Export": {
+    "Name": "KtxWaitingRoom-Redis-Endpoint"
+   }
+  },
+  "WebsiteURL": {
+   "Description": "Website URL",
+   "Value": {
+    "Fn::Join": [
+     "",
+     [
+      "http://",
+      {
+       "Fn::GetAtt": [
+        "KtxWaitingRoomALB93DBCB0C",
+        "DNSName"
+       ]
+      }
+     ]
+    ]
+   },
+   "Export": {
+    "Name": "KtxWaitingRoom-Website-URL"
+   }
+  },
+  "ApiURL": {
+   "Description": "API URL",
+   "Value": {
+    "Fn::Join": [
+     "",
+     [
+      "http://",
+      {
+       "Fn::GetAtt": [
+        "KtxWaitingRoomALB93DBCB0C",
+        "DNSName"
+       ]
+      },
+      "/api"
+     ]
+    ]
+   },
+   "Export": {
+    "Name": "KtxWaitingRoom-API-URL"
+   }
+  }
+ },
+ "Parameters": {
+  "BootstrapVersion": {
+   "Type": "AWS::SSM::Parameter::Value<String>",
+   "Default": "/cdk-bootstrap/hnb659fds/version",
+   "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]"
+  }
+ },
+ "Rules": {
+  "CheckBootstrapVersion": {
+   "Assertions": [
+    {
+     "Assert": {
+      "Fn::Not": [
+       {
+        "Fn::Contains": [
+         [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+         ],
+         {
+          "Ref": "BootstrapVersion"
+         }
+        ]
+       }
+      ]
+     },
+     "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI."
+    }
+   ]
+  }
+ }
+}
