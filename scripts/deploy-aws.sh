@@ -179,7 +179,7 @@ cd ..
 # Frontend 이미지
 print_status "Frontend 이미지 빌드 중..."
 cd frontend
-docker build --platform linux/amd64 -t $PROJECT_NAME-frontend --build-arg PROFILE=ecs .
+docker build -t $PROJECT_NAME-frontend .
 docker tag $PROJECT_NAME-frontend:latest $FRONTEND_ECR_URI:latest
 
 print_status "Frontend 이미지 푸시 중..."
@@ -194,22 +194,28 @@ cd ..
 
 print_success "Docker 이미지 배포 완료"
 
-# 7. ECS 서비스 업데이트
-print_status "🔄 ECS 서비스 업데이트..."
+# 7. ECS 서비스 스케일 업 및 업데이트
+print_status "🔄 ECS 서비스 스케일 업 및 업데이트..."
 
-# Backend 서비스 업데이트
+# Backend 서비스 스케일 업 (0 -> 6)
+print_status "Backend 서비스 스케일 업 (desired count: 6)..."
 aws ecs update-service \
     --cluster ktx-waiting-room-cluster \
     --service ktx-backend-service \
+    --desired-count 6 \
     --force-new-deployment \
     --region $AWS_REGION >/dev/null
 
-# Frontend 서비스 업데이트
+# Frontend 서비스 스케일 업 (0 -> 2)
+print_status "Frontend 서비스 스케일 업 (desired count: 2)..."
 aws ecs update-service \
     --cluster ktx-waiting-room-cluster \
     --service ktx-frontend-service \
+    --desired-count 2 \
     --force-new-deployment \
     --region $AWS_REGION >/dev/null
+
+print_success "ECS 서비스 스케일 업 완료"
 
 # 8. 배포 완료 대기
 print_status "⏳ 서비스 배포 완료 대기..."

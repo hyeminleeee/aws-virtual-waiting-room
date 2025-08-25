@@ -100,8 +100,8 @@ constructor(scope: Construct, id: string, props?: cdk.StackProps) {
         NODE_ENV: 'production',
         PORT: '3000',
         REDIS_URL: `redis://${redisCluster.attrRedisEndpointAddress}:${redisCluster.attrRedisEndpointPort}`,
-        MAX_CONCURRENT_USERS: '20',
-        SESSION_DURATION: '15000',
+        MAX_CONCURRENT_USERS: '50',
+        SESSION_DURATION: '10000',
         JWT_SECRET: 'production-jwt-secret-change-this',
       },
       logging: ecs.LogDrivers.awsLogs({
@@ -153,11 +153,11 @@ constructor(scope: Construct, id: string, props?: cdk.StackProps) {
       open: true,
     });
 
-    // ECS Services - desiredCount를 0으로 설정하여 초기 태스크 생성 방지
+    // ECS Services
     const backendService = new ecs.FargateService(this, 'BackendService', {
       cluster,
       taskDefinition: backendTaskDefinition,
-      desiredCount: 0,  // ← 0으로 변경! 초기에는 태스크 생성하지 않음
+      desiredCount: 0,
       assignPublicIp: false,
       vpcSubnets: {
         subnetType: ec2.SubnetType.PRIVATE_WITH_EGRESS,
@@ -169,7 +169,7 @@ constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     const frontendService = new ecs.FargateService(this, 'FrontendService', {
       cluster,
       taskDefinition: frontendTaskDefinition,
-      desiredCount: 0,  // ← 0으로 변경! 초기에는 태스크 생성하지 않음
+      desiredCount: 0,
       assignPublicIp: false,
       vpcSubnets: {
         subnetType: ec2.SubnetType.PRIVATE_WITH_EGRESS,

@@ -637,7 +637,7 @@
        },
        {
         "Name": "SESSION_DURATION",
-        "Value": "15000"
+        "Value": "600000"
        },
        {
         "Name": "JWT_SECRET",
@@ -1182,7 +1182,7 @@
      "MaximumPercent": 200,
      "MinimumHealthyPercent": 50
     },
-    "DesiredCount": 2,
+    "DesiredCount": 0,
     "EnableECSManagedTags": false,
     "EnableExecuteCommand": true,
     "HealthCheckGracePeriodSeconds": 60,
@@ -1368,7 +1368,7 @@
      "MaximumPercent": 200,
      "MinimumHealthyPercent": 50
     },
-    "DesiredCount": 2,
+    "DesiredCount": 0,
     "EnableECSManagedTags": false,
     "HealthCheckGracePeriodSeconds": 60,
     "LaunchType": "FARGATE",

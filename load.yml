@@ -1,5 +1,5 @@
 config:
-  target: "http://ktx-waiting-room-alb-1640745648.ap-northeast-2.elb.amazonaws.com"
+  target: "http://ktxwaitingroom.nextcloudlab.com"
   phases:
     - duration: 30
       arrivalRate: 5
