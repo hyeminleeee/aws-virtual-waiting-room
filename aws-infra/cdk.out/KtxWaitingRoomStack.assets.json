@@ -1,16 +1,16 @@
 {
   "version": "48.0.0",
   "files": {
-    "350b09878035e22ed9bcabf73806e106d4327b9a1abcade6c1d27f53de2e833d": {
+    "3eb84255806728fba3efea377dbe34782a0680a8e36b329a82611e868f740cab": {
       "displayName": "KtxWaitingRoomStack Template",
       "source": {
         "path": "KtxWaitingRoomStack.template.json",
         "packaging": "file"
       },
       "destinations": {
-        "077672914621-ap-northeast-2-a4f7497a": {
+        "077672914621-ap-northeast-2-722de0a1": {
           "bucketName": "cdk-hnb659fds-assets-077672914621-ap-northeast-2",
-          "objectKey": "350b09878035e22ed9bcabf73806e106d4327b9a1abcade6c1d27f53de2e833d.json",
+          "objectKey": "3eb84255806728fba3efea377dbe34782a0680a8e36b329a82611e868f740cab.json",
           "region": "ap-northeast-2",
           "assumeRoleArn": "arn:${AWS::Partition}:iam::077672914621:role/cdk-hnb659fds-file-publishing-role-077672914621-ap-northeast-2"
         }

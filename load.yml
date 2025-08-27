@@ -1,15 +1,27 @@
 config:
   target: "http://ktxwaitingroom.nextcloudlab.com"
   phases:
-    - duration: 30
-      arrivalRate: 5
+    # Phase 1: 워밍업 (2,000명) - 2분간 점진적 증가
     - duration: 120
-      arrivalRate: 25
-    - duration: 30
-      arrivalRate: 10
+      arrivalRate: 17
+      name: "워밍업 단계"
+    # Phase 2: 피크 러시 (6,000명) - 5분간 고강도 부하
+    - duration: 300
+      arrivalRate: 20
+      name: "피크 러시 단계"
+    # Phase 3: 쿨다운 (2,000명) - 2분간 점진적 감소
+    - duration: 120
+      arrivalRate: 17
+      name: "쿨다운 단계"
+
 scenarios:
   - name: "KTX 예매 시나리오"
+    weight: 100
     flow:
+      # 사용자 접속 대기
+      - think: 2
+
+      # KTX 예매 요청
       - post:
           url: "/api/book-ktx"
           json:
@@ -23,12 +35,43 @@ scenarios:
               as: "sessionId"
             - json: "$.status"
               as: "status"
-      - think: 2
-      # 상태가 queued여도 그냥 end-session을 호출해도 서버가 안전하게 무시/정리합니다.
+          expect:
+            - statusCode: [200, 201]
+
+      # 대기열 상태 확인 (3회 반복)
+      - get:
+          url: "/api/queue-status"
+          qs:
+            userId: "{{ userId }}"
+          expect:
+            - statusCode: 200
+
+      - think: 5
+
+      - get:
+          url: "/api/queue-status"
+          qs:
+            userId: "{{ userId }}"
+          expect:
+            - statusCode: 200
+
+      - think: 5
+
+      - get:
+          url: "/api/queue-status"
+          qs:
+            userId: "{{ userId }}"
+          expect:
+            - statusCode: 200
+
+      # 사용자 행동 대기
+      - think: 10
+
+      # 세션 종료
       - post:
           url: "/api/end-session"
           json:
             userId: "{{ userId }}"
             sessionId: "{{ sessionId }}"
-      - get:
-          url: "/api/queue-status"
+          expect:
+            - statusCode: [200, 204]

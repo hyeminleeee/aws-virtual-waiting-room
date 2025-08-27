@@ -633,11 +633,11 @@
        },
        {
         "Name": "MAX_CONCURRENT_USERS",
-        "Value": "20"
+        "Value": "50"
        },
        {
         "Name": "SESSION_DURATION",
-        "Value": "600000"
+        "Value": "10000"
        },
        {
         "Name": "JWT_SECRET",
